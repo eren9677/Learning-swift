@@ -14,7 +14,7 @@ func own_sqrt(_ number: Int) throws -> Int{
 }
 
 do {
-    let result = try own_sqrt(25)
+    let result = try own_sqrt(101)
 }
 catch NumberError.OutOfBounds{
     print("the given number is out of the bounds!")
