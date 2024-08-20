@@ -5,7 +5,7 @@ enum AmountError : Error{
 
 
 struct BankAccount {
-    var funds : Int = 0
+    private var funds : Int = 0
     
     mutating func Deposit(amount:Int){
         funds += amount
@@ -30,9 +30,9 @@ struct BankAccount {
     
 }
 
-var account1 = BankAccount(funds: 3_000)
+var account1 = BankAccount()
 
-
+account1.Deposit(amount: 3_000)
 
 do {
     account1.Deposit(amount: 300)
@@ -52,3 +52,53 @@ catch AmountError.NoEnoughFunds {
     print("Not Enough funds for that action")
 }
 
+
+print("checking if this line will execute ? ")
+
+
+enum CarError : Error {
+    case GearOutOfRange
+}
+
+struct Car {
+    let model: String
+    let seats: Int
+    private(set) var current_gear : Int = 1 {
+        didSet {
+            print("The \(model) was in gear: \(oldValue) new gear : \(current_gear)")
+        }
+    }
+    
+    enum Gear {
+        case up , down , neutral
+    }
+    
+    public mutating func ChangeGear(_ direction: Gear) throws{
+        switch direction {
+        case .up :  
+            if (current_gear <= 9) { current_gear += 1 }
+            else {throw CarError.GearOutOfRange}
+        case .down :
+            if (current_gear > 1) { current_gear -= 1 }
+            else {throw CarError.GearOutOfRange}
+        case .neutral :  current_gear = 1
+        }
+    }
+}
+
+
+
+do {
+    var car1 = Car( model: "Porsche", seats: 2, current_gear: 4)
+    for _ in 1...6 {
+        try car1.ChangeGear(.up)
+    }
+    
+    var car2 = Car(model: "lambo", seats: 2, current_gear: 3)
+    
+    for _ in 1...4 {
+        try car2.ChangeGear(.down)
+    }
+    
+}
+catch CarError.GearOutOfRange { print("Gear is Out of range !!") }
