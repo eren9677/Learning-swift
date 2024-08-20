@@ -1,3 +1,2 @@
-import UIKit
+// this checkpoint is mainly about protocols extensions and protocol extensions.
 
-var greeting = "Hello, playground"
