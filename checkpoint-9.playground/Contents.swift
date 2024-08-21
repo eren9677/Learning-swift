@@ -18,3 +18,15 @@ if let deneme = deneme_number {
 } else {
     print("optional was empty.")
 }
+ 
+
+
+// Your challenge is this: write a function that accepts an optional array of integers, and returns one randomly. If the array is missing or empty, return a random number in the range 1 through 100.
+
+
+func SimpleFunction(_ arr : [Int]?) -> Int {
+    return arr?.randomElement() ?? Int.random(in: 1...100)
+}
+SimpleFunction([3,4,5,6,7,8,9,])
+SimpleFunction(nil)
+SimpleFunction([])
