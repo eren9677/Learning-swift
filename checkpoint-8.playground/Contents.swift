@@ -7,12 +7,7 @@ protocol Building {
     func BuildingSummary() -> String
 }
 
-//builging a house
-
-struct House : Building{
-    var name: String
-    var cost: Int
-    var room: Int
+extension Building {
     func BuildingSummary() -> String {
         
        return  """
@@ -22,17 +17,18 @@ struct House : Building{
     }
 }
 
+//builging a house
+
+struct House : Building{
+    var name: String
+    var cost: Int
+    var room: Int
+}
+
 struct Office : Building{
     var name: String
     var cost: Int
     var room: Int
-    func BuildingSummary() -> String {
-        
-       return  """
-        this building's name is \(name )
-        and it costs \(cost)$ and has \(room) rooms
-       """
-    }
 }
 
 var house1 = House(name: "Erenin yazlık ada evi", cost: 5_000_000, room: 10)
