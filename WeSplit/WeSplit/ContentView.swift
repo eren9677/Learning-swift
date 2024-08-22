@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var people: Int = 2 // Minimum amount of a split made is two.
     @State private var tipPercentage: Int = 10
     let tipPercentages: [Int] = [0, 10, 15, 20, 25]
+    @FocusState private var amountIsFocused: Bool
     
     private var totalPerPerson : Double {
         return (check + (check * Double(tipPercentage) / 100)) / Double(people)
@@ -23,6 +24,7 @@ struct ContentView: View {
                 Section{
                     TextField("Amount", value: $check, format: .currency(code: Locale.current.currency?.identifier ?? "USD" ))
                         .keyboardType(.decimalPad)
+                        .focused($amountIsFocused)
                     
                     Picker("Number of people", selection: $people) {
                         ForEach(2 ..< 11 ,id: \.self){
@@ -49,6 +51,13 @@ struct ContentView: View {
                 
             }
             .navigationTitle("WeSplit")
+            .toolbar {
+                if amountIsFocused {
+                    Button("Done") {
+                        amountIsFocused = false
+                    }
+                }
+            }
         }
     }
 }
