@@ -8,24 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var scale : Int = 0
+    @State private var check: Double = 0.0
+    @State private var people: Int = 2 // Minimum amount of a split made is two.
+    @State private var tipPercentage: Int = 15
+    
+    let tipPercentages: [Int] = [0, 15, 20, 25, 30]
+    
     var body: some View {
-        VStack {
-            Button {
-                scale += 1
-                
-            } label: {
-                Label(
-                    title: { Text("Hello World!").font(.title3) },
-                    icon: { Image(systemName: "snowflake").imageScale(.large) }
-                )
+        NavigationView {
+            Form {
+                TextField("Amount", value: $check, format: .currency(code: Locale.current.currency?.identifier ?? "YEN" ))
+                    .keyboardType(.decimalPad)
             }
-            .symbolEffect(.bounce, value: scale)
-            .scaledToFit()
-            
-            Text("Button is clicked for \(scale) times")
-            
-            
+            .navigationTitle("WeSplit")
         }
     }
 }
