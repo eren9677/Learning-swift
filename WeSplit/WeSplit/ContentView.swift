@@ -35,7 +35,8 @@ struct ContentView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                }
+                    .pickerStyle(.segmented)
+                
                 
             }
             .navigationTitle("WeSplit")
