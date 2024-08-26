@@ -12,32 +12,28 @@ struct ContentView: View {
     
     @State private var countries : [String] = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
     @State private var correctCountry : Int = Int.random(in: 0...2)
-    @State private var showingScore : Bool = false
-    @State private var scoreTitle : String = ""
+    @State private var showingAlert : Bool = false
+    @State private var alertTitle : String = ""
     
     @State private var score : Int = 0
+    @State private var oldCountry : String = ""
     
     private func FlagTapped(_ number: Int ){
         if number == correctCountry{
-            scoreTitle = "Correct"
             score += 1
+            AskQuestion()
         }
         else{
-            scoreTitle = "Wrong"
+            oldCountry = countries[number]
+            showingAlert = true
         }
-        showingScore = true
     }
     
     private func AskQuestion(){
         countries.shuffle()
         correctCountry = Int.random(in: 0...2)
     }
-    
-    private func ChangeScore(){
         
-    }
-    
-    
     
     
     var body: some View {
@@ -58,9 +54,10 @@ struct ContentView: View {
                         }label: {
                             Image(countries[number]).clipShape(.capsule).shadow(radius: 5)
                         }
-                        .alert(scoreTitle, isPresented: $showingScore ){
+                        .alert(alertTitle, isPresented: $showingAlert ){
                             Button("Continue", action: AskQuestion)
                         } message: {
+                            Text("That is \(oldCountry)")
                             Text("Your score is : \(score)")
                         }
                     }
