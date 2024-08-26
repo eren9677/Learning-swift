@@ -9,13 +9,36 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        ZStack{
+            Color(red:1, green:0.8, blue:0)
+            VStack{
+                ForEach(1..<4){_ in
+                    HStack{
+                        ForEach(1..<4) {_ in
+                            
+                            Image(systemName: "globe")
+                                .imageScale(.large)
+                                .foregroundStyle(.tint)
+                        }
+                    }
+                    
+                }
+            }.background(.ultraThinMaterial)
+            
+            VStack{
+                Spacer()
+                Spacer()
+                Button("Click to me"){
+                    print("button was clicked")
+                }
+                    .buttonStyle(.bordered)
+                Spacer()
+            }
+            
+
         }
-        .padding()
+        .ignoresSafeArea()
     }
 }
 
