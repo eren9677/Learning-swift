@@ -17,6 +17,10 @@ struct ContentView: View {
     
     @State private var score : Int = 0
     @State private var oldCountry : String = ""
+    private let totalTime : Int = 30
+    @State private var elapsed : Int = 0
+    
+    @State private var timeUp : Bool = false
     
     private func FlagTapped(_ number: Int ){
         if number == correctCountry{
@@ -33,6 +37,23 @@ struct ContentView: View {
         countries.shuffle()
         correctCountry = Int.random(in: 0...2)
     }
+    private func StartTimer() {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if self.elapsed < self.totalTime {
+                self.elapsed += 1
+            } else {
+                timer.invalidate()
+                timeUp.toggle()
+            }
+        }
+    }
+    
+    private func RestartGame(){
+        score = 0
+        elapsed = 0
+        AskQuestion()
+        StartTimer()
+    }
         
     
     
@@ -42,6 +63,17 @@ struct ContentView: View {
             VStack{
                 Spacer()
                 Text("Welcome to GuessFlags 🤠").font(.title.weight(.bold)).foregroundStyle(.black)
+                
+                Text("Time left : \(totalTime-elapsed) sec")
+                    .onAppear {
+                        StartTimer()
+                    }
+                    .alert("Time is up", isPresented: $timeUp ){
+                        Button("Restart", action : RestartGame )
+                    }message: {
+                        Text("your score is : \(score)")
+                    }
+                
                 VStack(spacing:15){
                     VStack(){
                         Text("Tap the flag of").foregroundStyle(.secondary).font(.subheadline.weight(.heavy))
@@ -70,8 +102,10 @@ struct ContentView: View {
                 Text("Your Score: \(score)").font(.title2.weight(.semibold)).foregroundStyle(.primary)
             }
             .padding()
+        
             
         }
+        
     }
         
         
