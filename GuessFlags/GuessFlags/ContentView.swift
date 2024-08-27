@@ -90,7 +90,6 @@ struct ContentView: View {
                             Button("Continue", action: AskQuestion)
                         } message: {
                             Text("That is \(oldCountry)")
-                            Text("Your score is : \(score)")
                         }
                     }
                 }
