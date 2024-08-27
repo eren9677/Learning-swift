@@ -7,17 +7,41 @@
 
 import SwiftUI
 
+struct FlagImage: View {
+    
+    var file : String
+    
+    var body: some View {
+        Image(file).resizable(resizingMode: .stretch).imageScale(.small).clipShape(.capsule).shadow(radius: 5).padding(.leading, 20)
+    }
+}
+struct FlagImage2: View {
+    
+    var file : String
+    
+    var body: some View {
+        Image(file)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(.capsule)
+            .frame(width: 150, height:100)
+            .scaledToFit()
+            .shadow(radius: 5)
+            
+    }
+}
 
 struct ContentView: View {
     
-    @State private var countries : [String] = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
+    @State private var countries : [String] = ["Afghanistan", "Albania", "Algeria", "Argentina", "Austria", "Azerbaijan", "Belarus", "Bhutan", "Brazil", "Bulgaria", "Canada", "China","Estonia","France","Germany","Greece","India","Indonesia","Ireland","Israel","Italy","Jamaica","Japan","Kazakhstan","Kyrgzstan","Lebanon","Monaco","Montenegro","Morocco","Netherlands","Nigeria","North Korea","Norway","Poland","Spain","Sweden","Switzerland","Thailand","Tunisia","Turkey","Uganda","UK","Ukraine","US","Vietnam"].shuffled()
+    
     @State private var correctCountry : Int = Int.random(in: 0...2)
     @State private var showingAlert : Bool = false
     @State private var alertTitle : String = ""
     
     @State private var score : Int = 0
     @State private var oldCountry : String = ""
-    private let totalTime : Int = 30
+    private let totalTime : Int = 150
     @State private var elapsed : Int = 0
     
     @State private var timeUp : Bool = false
@@ -84,7 +108,7 @@ struct ContentView: View {
                         Button(){
                             FlagTapped(number)
                         }label: {
-                            Image(countries[number]).clipShape(.capsule).shadow(radius: 5)
+                            FlagImage2(file : countries[number])
                         }
                         .alert(alertTitle, isPresented: $showingAlert ){
                             Button("Continue", action: AskQuestion)
