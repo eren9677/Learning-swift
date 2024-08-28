@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-struct FlagImage: View {
-    
-    var file : String
-    
-    var body: some View {
-        Image(file).resizable(resizingMode: .stretch).imageScale(.small).clipShape(.capsule).shadow(radius: 5).padding(.leading, 20)
-    }
-}
 struct FlagImage2: View {
     
     var file : String
@@ -30,6 +22,24 @@ struct FlagImage2: View {
             
     }
 }
+
+
+// i will create a custom view modifier for making the text bluee
+
+struct BlueImage : ViewModifier {
+    func body(content: Content) -> some View {
+        content.font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).foregroundStyle(.blue)
+    }
+}
+
+extension View {
+    func blueTitle() -> some View{
+        modifier(BlueImage())
+    }
+}
+
+
+
 
 struct ContentView: View {
     
