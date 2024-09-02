@@ -64,23 +64,30 @@ struct ContentView: View {
     
     private let checkMatrix : [Int : [Int : Int]] = [
         //0 is for lose and 1 is for win
-        0 : [0: 2, 1: 1],   //each row is the rock paper scissors
-        1 : [0: 0, 1: 2],
-        2 : [0: 1, 1: 0],
+        0 : [0: 1, 1: 2],   //each row is the rock paper scissors
+        1 : [0: 2, 1: 0],
+        2 : [0: 0, 1: 1],
     ]
     
     @State private var score : Int = 0
     
-    private func checkCorrect(_ option : Int , end: Int) {
-        if let option = checkMatrix[option]?[end] {
-            score += 1
-            AskTurn()
+    private func checkCorrect(_ option : Int) {
+        if let correctmove = checkMatrix[selectedOption]?[selectedEnd] {
+            if correctmove == option {
+                score += 1
+                AskTurn()
+                
+            }
+            
+            else{
+                if score != 0 {
+                    score -= 1
+                }
+                showAlert.toggle()
+            }
         }
         else {
-            if score != 0 {
-                score -= 1
-            }
-            showAlert.toggle()
+            print("unable matrix move")
         }
     }
     
@@ -125,7 +132,7 @@ struct ContentView: View {
                     
                     ForEach(0..<3){ option in
                         Button(){
-                            checkCorrect(option, end: selectedEnd)
+                            checkCorrect(option)
                             
                         }label: {
                             OptionImage(file : options[option])
