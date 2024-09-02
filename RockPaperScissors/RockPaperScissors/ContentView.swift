@@ -13,8 +13,11 @@ struct OptionImage: View {
     
     var body: some View {
         Image(file)
+            .resizable()
+            .frame(maxWidth: .infinity, maxHeight: 100)
             .clipShape(.capsule)
             .shadow(radius: 5)
+            .padding()
     
             
     }
@@ -58,6 +61,38 @@ struct ContentView: View {
     private let ends : [String] = ["Win","Lose"]
     @State private var selectedEnd : Int = Int.random(in: 0...1)
     
+    
+    private let checkMatrix : [Int : [Int : Int]] = [
+        //0 is for lose and 1 is for win
+        0 : [0: 2, 1: 1],   //each row is the rock paper scissors
+        1 : [0: 0, 1: 2],
+        2 : [0: 1, 1: 0],
+    ]
+    
+    @State private var score : Int = 0
+    
+    private func checkCorrect(_ option : Int , end: Int) {
+        if let option = checkMatrix[option]?[end] {
+            score += 1
+            AskTurn()
+        }
+        else {
+            if score != 0 {
+                score -= 1
+            }
+            showAlert.toggle()
+        }
+    }
+    
+    
+    private func AskTurn(){
+        selectedOption = Int.random(in: 0...2)
+        selectedEnd = Int.random(in: 0...1)
+    }
+    
+    @State private var showAlert : Bool = false
+    
+    
 
     
     
@@ -88,18 +123,25 @@ struct ContentView: View {
                 
                 HStack{
                     
-                    ForEach(options, id: \.self){ option in
+                    ForEach(0..<3){ option in
                         Button(){
+                            checkCorrect(option, end: selectedEnd)
                             
                         }label: {
-                            OptionImage(file : option)
+                            OptionImage(file : options[option])
+                            
+                        }.alert("ALeRt", isPresented: $showAlert) {
                             
                         }
                     }
                 
                 }.blockIt()
                 
-            }
+                HStack{
+                    Text("Your Score is : \(score)")
+                }.blockIt()
+                
+            }.padding()
         }
     }
 }
