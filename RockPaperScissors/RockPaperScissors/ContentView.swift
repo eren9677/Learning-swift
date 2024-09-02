@@ -70,24 +70,35 @@ struct ContentView: View {
     ]
     
     @State private var score : Int = 0
+    @State private var turns : Int = 0
+    
+    @State private var turnsUp : Bool = false
     
     private func checkCorrect(_ option : Int) {
-        if let correctmove = checkMatrix[selectedOption]?[selectedEnd] {
-            if correctmove == option {
-                score += 1
-                AskTurn()
-                
-            }
-            
-            else{
-                if score != 0 {
-                    score -= 1
-                }
-                showAlert.toggle()
-            }
+        
+        if turns == 10 {
+            turnsUp.toggle()
         }
-        else {
-            print("unable matrix move")
+        else{
+            if let correctmove = checkMatrix[selectedOption]?[selectedEnd] {
+                if correctmove == option {
+                    score += 1
+                    turns += 1
+                    AskTurn()
+                    
+                }
+                
+                else{
+                    turns += 1
+                    if score != 0 {
+                        score -= 1
+                    }
+                    showAlert.toggle()
+                }
+            }
+            else {
+                print("unable matrix move")
+            }
         }
     }
     
@@ -95,6 +106,12 @@ struct ContentView: View {
     private func AskTurn(){
         selectedOption = Int.random(in: 0...2)
         selectedEnd = Int.random(in: 0...1)
+    }
+    
+    private func RestartGame(){
+        score = 0
+        turns = 0
+        AskTurn()
     }
     
     @State private var showAlert : Bool = false
@@ -137,7 +154,7 @@ struct ContentView: View {
                         }label: {
                             OptionImage(file : options[option])
                             
-                        }.alert("ALeRt", isPresented: $showAlert) {
+                        }.alert("Wrong Move", isPresented: $showAlert) {
                             
                         }
                     }
@@ -146,6 +163,12 @@ struct ContentView: View {
                 
                 HStack{
                     Text("Your Score is : \(score)")
+                        .alert("No Turns Left", isPresented: $turnsUp ){
+                        Button("Restart", action : RestartGame )
+                    }message: {
+                        Text("your score is : \(score)")
+                    }
+
                 }.blockIt()
                 
             }.padding()
