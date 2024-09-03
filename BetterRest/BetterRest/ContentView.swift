@@ -8,6 +8,20 @@
 import SwiftUI
 import CoreML
 
+struct Blockk : ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .background(.thinMaterial)
+            .clipShape(.rect(cornerRadius: 20))
+    }
+}
+
+extension View {
+    func blockIt () -> some View {
+        modifier(Blockk())
+    }
+}
 
 
 struct Questions : ViewModifier {
@@ -63,32 +77,35 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack{
-            VStack{
+            ZStack{
+                LinearGradient(colors: [.red, .yellow], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+
+                VStack{
+                    
+                    Text("When do you want to wake up?").question()
+                    
+                    DatePicker("please enter date" ,selection: $wakeUp, displayedComponents: .hourAndMinute
+                    ).labelsHidden()
+                    
+                    Text("How many cups of coffe you drink? ").question()
+                    
+                    Stepper("\(cupsOfCoffee)", value: $cupsOfCoffee, in: 0...12).padding()
+                    
+                    Text("Desired Amount of Sleep").question()
+                    
+                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25).padding()
+                    
+                }.blockIt().padding()
                 
-                Text("When do you want to wake up?").question()
-                
-                DatePicker("please enter date" ,selection: $wakeUp, displayedComponents: .hourAndMinute
-                ).labelsHidden()
-                
-                Text("How many cups of coffe you drink? ").question()
-                
-                Stepper("\(cupsOfCoffee)", value: $cupsOfCoffee, in: 0...12).padding()
-                
-                Text("Desired Amount of Sleep").question()
-                
-                Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25).padding()
-                
+                .navigationTitle("BetterRest")
+                .toolbar{
+                    Button("Done", action: CalculateSleep).blockIt()                }
+                .alert(alertTitle, isPresented :$showAlert){
+                    Button("Ok"){}
+                }message: {
+                    Text(alertMessage)
+                }
             }
-            
-        .navigationTitle("BetterRest")
-        .toolbar{
-            Button("Done", action: CalculateSleep)
-        }
-        .alert(alertTitle, isPresented :$showAlert){
-            Button("Ok"){}
-        }message: {
-            Text(alertMessage)
-        }
         }
     }
 }
