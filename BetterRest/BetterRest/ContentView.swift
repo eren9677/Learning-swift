@@ -89,7 +89,6 @@ struct ContentView: View {
                         
                         DatePicker("please enter date" ,selection: $wakeUp, displayedComponents: .hourAndMinute
                         )
-                        .background(.secondary)
                         .clipShape(.capsule)
                         .labelsHidden()
                         
