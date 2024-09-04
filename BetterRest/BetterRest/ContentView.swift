@@ -11,9 +11,10 @@ import CoreML
 struct Blockk : ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+            .frame(maxWidth: .infinity)
             .background(.thinMaterial)
-            .clipShape(.rect(cornerRadius: 20))
+            .background(.quaternary)
+            .clipShape(.rect(cornerRadius: 25))
     }
 }
 
@@ -26,7 +27,7 @@ extension View {
 
 struct Questions : ViewModifier {
     func body(content: Content) -> some View {
-        content.font(.title2.weight(.bold)).foregroundStyle(.black)
+        content.font(.headline).foregroundStyle(.primary).padding()
     }
 }
 
@@ -79,30 +80,46 @@ struct ContentView: View {
         NavigationStack{
             ZStack{
                 LinearGradient(colors: [.red, .yellow], startPoint: .top, endPoint: .bottom).ignoresSafeArea()
-
-                VStack{
-                    
-                    Text("When do you want to wake up?").question()
-                    
-                    DatePicker("please enter date" ,selection: $wakeUp, displayedComponents: .hourAndMinute
-                    ).labelsHidden()
-                    
-                    Text("How many cups of coffe you drink? ").question()
-                    
-                    Stepper("\(cupsOfCoffee)", value: $cupsOfCoffee, in: 0...12).padding()
-                    
-                    Text("Desired Amount of Sleep").question()
-                    
-                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25).padding()
-                    
-                }.blockIt().padding()
                 
+                ScrollView{
+                    
+                    VStack{
+                        
+                        Text("When do you want to wake up?").question()
+                        
+                        DatePicker("please enter date" ,selection: $wakeUp, displayedComponents: .hourAndMinute
+                        )
+                        .background(.secondary)
+                        .clipShape(.capsule)
+                        .labelsHidden()
+                        
+                        Text("How many cups of coffe you drink? ").question()
+                        
+                        Stepper("\(cupsOfCoffee)", value: $cupsOfCoffee, in: 0...12)
+                            .padding(.horizontal)
+                        Text("Desired Amount of Sleep").question()
+                        
+                        Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25).padding(.bottom).padding(.horizontal)
+                        
+                    }
+                    .blockIt()
+                    .padding()
+                    
+                }
                 .navigationTitle("BetterRest")
-                .toolbar{
-                    Button("Done", action: CalculateSleep).blockIt()                }
-                .alert(alertTitle, isPresented :$showAlert){
-                    Button("Ok"){}
-                }message: {
+                .toolbar {
+                    ToolbarItem(placement: .automatic) {
+                        Button("Done", action: CalculateSleep)
+                            .frame(maxWidth: 70)
+                            .safeAreaPadding(.init(top: 2, leading: 5, bottom: 2, trailing: 10))
+                            .background(.thinMaterial)
+                            .foregroundStyle(.primary)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                }
+                .alert(alertTitle, isPresented: $showAlert) {
+                    Button("Ok") {}
+                } message: {
                     Text(alertMessage)
                 }
             }
