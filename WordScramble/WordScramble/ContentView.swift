@@ -33,6 +33,7 @@ struct ContentView: View {
             .onSubmit {
                 withAnimation{addNewWord()}
             }
+            .onAppear(perform: startGame)
         }
     }
     
@@ -67,11 +68,28 @@ struct ContentView: View {
     }
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         guard answer.count > 0 else { return }
         
         usedWords.insert(answer, at: 0)
         newWord = ""
+    }
+    
+    func startGame(){
+        if let textUrl = Bundle.main.url(forResource: "start", withExtension: "txt"){
+            
+            if let textContent = try? String(contentsOf: textUrl){
+                let allWords = textContent.components(separatedBy: "\n")
+                
+                rootWord = allWords.randomElement() ?? "silkworm"
+                
+            }else {
+                fatalError("bunde is corrupted!")
+            }
+            
+        }else{
+            fatalError("Error. bundle can not be found. ")
+        }
     }
 }
 
