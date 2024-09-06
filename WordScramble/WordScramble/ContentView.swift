@@ -18,14 +18,21 @@ struct ContentView: View {
             List{
                 Section{
                     TextField("Please Enter your word", text: $newWord)
+                        .textInputAutocapitalization(.never)
                 }
                 Section{
-                    ForEach(usedWords, id: \.self){word in
-                        Text(word)
+                    ForEach(usedWords, id: \.self) { word in
+                        HStack {
+                            Image(systemName: "\(word.count).circle")
+                            Text(word)
+                        }
                     }
                 }
             }
             .navigationTitle(rootWord)
+            .onSubmit {
+                withAnimation{addNewWord()}
+            }
         }
     }
     
@@ -57,6 +64,14 @@ struct ContentView: View {
         //this code checks if a misspell is found or not in a range
         
         
+    }
+    func addNewWord() {
+        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard answer.count > 0 else { return }
+        
+        usedWords.insert(answer, at: 0)
+        newWord = ""
     }
 }
 
