@@ -46,13 +46,13 @@ struct ContentView: View {
     
     
     func testStrings(){
-        var word = "swift"
-        var checker = UITextChecker()
+        let  word = "swift"
+        let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         
         let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "EN")
         
-        let allGood = misspelled.location == NSNotFound
+        var allGood = misspelled.location == NSNotFound
         
         //this code checks if a misspell is found or not in a range
         
