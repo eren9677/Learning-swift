@@ -12,6 +12,9 @@ struct ContentView: View {
     @State private var newWord = ""
     @State private var usedWords : [String] = [String]()
     
+    @State private var errorTitle: String = ""
+    @State private var errorMessage : String = ""
+    @State private var showError : Bool = false
     
     var body: some View {
         NavigationStack{
@@ -34,7 +37,27 @@ struct ContentView: View {
                 withAnimation{addNewWord()}
             }
             .onAppear(perform: startGame)
+            .alert(errorTitle, isPresented: $showError){
+                Button("OK"){}
+            }message: {
+                Text(errorMessage)
+            }
         }
+    }
+    
+    func isOriginal(_ word : String) -> Bool{
+        !usedWords.contains(word)
+    }
+    func isPossible(_ word : String) -> Bool {
+        var tempWord = rootWord
+        for letter in word {
+            if let pos = tempWord.firstIndex(of: letter){
+                tempWord.remove(at: pos)
+            } else {
+                return false
+            }
+        }
+        return true
     }
     
     func testUrls() {
@@ -71,6 +94,15 @@ struct ContentView: View {
         
         guard answer.count > 0 else { return }
         
+        guard isOriginal(newWord) else {
+            WordError(title: "Word is Used", message: "Be more original.")
+            return
+        }
+        guard isPossible(newWord) else {
+            WordError(title: "Word not possible", message: "You can't spell that word from \(rootWord)!")
+            return
+        }
+        
         usedWords.insert(answer, at: 0)
         newWord = ""
     }
@@ -90,6 +122,13 @@ struct ContentView: View {
         }else{
             fatalError("Error. bundle can not be found. ")
         }
+    }
+    
+
+    func WordError(title : String, message : String ){
+        errorTitle = title
+        errorMessage = message
+        showError = true
     }
 }
 
