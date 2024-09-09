@@ -82,8 +82,7 @@ struct ContentView: View {
         
         let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
-        var allGood = misspelled.location == NSNotFound
-        return allGood
+       return misspelled.location == NSNotFound
     }
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
