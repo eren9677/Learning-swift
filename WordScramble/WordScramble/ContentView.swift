@@ -76,18 +76,14 @@ struct ContentView: View {
     }
     
     
-    func testStrings(){
-        let  word = "swift"
+    func testStrings(_ word : String) -> Bool{
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         
-        let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "EN")
+        let misspelled = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
         var allGood = misspelled.location == NSNotFound
-        
-        //this code checks if a misspell is found or not in a range
-        
-        
+        return allGood
     }
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
@@ -100,6 +96,10 @@ struct ContentView: View {
         }
         guard isPossible(newWord) else {
             WordError(title: "Word not possible", message: "You can't spell that word from \(rootWord)!")
+            return
+        }
+        guard testStrings(newWord) else {
+            WordError(title: "There is no Such word.", message: "you can't make up the words.")
             return
         }
         
