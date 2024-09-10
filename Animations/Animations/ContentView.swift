@@ -49,12 +49,10 @@ struct ContentView: View {
                 .gesture(
                     DragGesture()
                         .onChanged{ dragAmount = $0.translation}
-                        .onEnded{ _ in dragAmount = .zero}
-                )
-                .animation(
-                    .spring(duration: 0.6, bounce: 0.6)
-                    .repeatForever(autoreverses: false),
-                    value: dragAmount
+                        .onEnded{ _ in
+                            withAnimation(.bouncy){
+                                dragAmount = .zero}
+                        }
                 )
         }
         
