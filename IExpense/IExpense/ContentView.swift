@@ -9,10 +9,47 @@ import SwiftUI
  // this example wil show passing data between views using classes and an observable keyword.
 struct SecondView : View {
     @Environment(\.dismiss) var dismiss
+    
+    @State private var currentNumber : Int =  1
+    @State private var numbers: [Int] = []
+    
+    private func updateRows(){
+        numbers.append(currentNumber)
+        currentNumber += 1
+    }
+    func deleteRows(at offset : IndexSet){
+        numbers.remove(atOffsets: offset)
+    }
+    
     var body: some View {
-        Text("hello from second sheet!")
-        Button("dismiss"){
-            dismiss()
+        NavigationStack {
+            List{
+                ForEach(numbers, id: \.self){
+                    Text("Row \($0)")
+                }
+                .onDelete(perform:withAnimation{
+                    deleteRows}
+                )
+            }
+            Spacer()
+            
+            Text("hello from second sheet!").padding()
+            
+            
+            
+            Spacer()
+            HStack {
+                Button("dismiss"){
+                    dismiss()
+                }.padding()
+                Spacer()
+                Button("Add Rows"){
+                    withAnimation{
+                        updateRows()
+                    }
+                }.padding()
+            }
+            .navigationTitle("Second View")
         }
     }
 }
