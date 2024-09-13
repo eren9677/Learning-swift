@@ -7,33 +7,41 @@
 
 import SwiftUI
  // this example wil show passing data between views using classes and an observable keyword.
+
+
+struct ExpenseItem {
+    let name: String
+    let type : String
+    let amount : Double
+}
+
+
+struct Expenses {
+    var items : [ExpenseItem] = [ExpenseItem]()
+}
+
+
+
 struct SecondView : View {
     @Environment(\.dismiss) var dismiss
     
-    @State private var currentNumber : Int =  1
-    @State private var numbers: [Int] = []
+    @State private var expenses = Expenses()
     
-    private func updateRows(){
-        numbers.append(currentNumber)
-        currentNumber += 1
+    private func addExpense(){
+        var expense = ExpenseItem(name: "Test", type: "Personaş", amount: 2)
+        expenses.items.append(expense)
     }
-    func deleteRows(at offset : IndexSet){
-        numbers.remove(atOffsets: offset)
+    private func deleteExpense(at offsets : IndexSet){
+        expenses.items.remove(atOffsets: offsets)
     }
-    
+
     var body: some View {
         NavigationStack {
             List{
-                ForEach(numbers, id: \.self){
-                    Text("Row \($0)")
-                }
-                .onDelete(perform:withAnimation{
-                    deleteRows}
-                )
+                ForEach(expenses.items, id: \.name){ item in
+                    Text(item.name)
+                }.onDelete(perform: deleteExpense)
             }
-            Spacer()
-            
-            Text("hello from second sheet!").padding()
             
             
             
@@ -43,13 +51,11 @@ struct SecondView : View {
                     dismiss()
                 }.padding()
                 Spacer()
-                Button("Add Rows"){
-                    withAnimation{
-                        updateRows()
-                    }
+                Button("Add Expense"){
+                    addExpense()
                 }.padding()
             }
-            .navigationTitle("Second View")
+            .navigationTitle("IExpense")
         }
     }
 }
