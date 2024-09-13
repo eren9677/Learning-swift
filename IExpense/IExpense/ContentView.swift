@@ -60,7 +60,7 @@ struct SecondView : View {
                     addExpense()
                 }
                 .sheet(isPresented: $showingEditView, content: {
-                    EditView()
+                    EditView(expenses: expenses)
                 })
                 
             }
