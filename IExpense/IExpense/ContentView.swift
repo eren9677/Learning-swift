@@ -29,10 +29,10 @@ struct SecondView : View {
     @Environment(\.dismiss) var dismiss
     
     @State private var expenses = Expenses()
+    @State private var showingEditView : Bool = false
     
     private func addExpense(){
-        let expense = ExpenseItem(name: "Test", type: "Personal", amount: 2)
-        expenses.items.append(expense)
+        showingEditView.toggle()
     }
     private func deleteExpense(at offsets : IndexSet){
         expenses.items.remove(atOffsets: offsets)
@@ -59,6 +59,10 @@ struct SecondView : View {
                 Button("Add Expense", systemImage: "plus"){
                     addExpense()
                 }
+                .sheet(isPresented: $showingEditView, content: {
+                    EditView()
+                })
+                
             }
         }
     }

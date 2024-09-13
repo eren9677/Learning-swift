@@ -22,7 +22,7 @@ struct EditView: View {
                         Text($0)
                     }
                 }
-                TextField("Amount", value: $amount, format: .currency(code: Locale.current.currency?.identifier ?? "TRY") ).keyboardType(.numberPad)
+                TextField("Amount", value: $amount, format: .currency(code: Locale.current.currency?.identifier ?? "TRY") ).keyboardType(.decimalPad)
             }
         }
     }
