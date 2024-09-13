@@ -28,7 +28,7 @@ struct SecondView : View {
     @State private var expenses = Expenses()
     
     private func addExpense(){
-        var expense = ExpenseItem(name: "Test", type: "Personaş", amount: 2)
+        var expense = ExpenseItem(name: "Test", type: "Personal", amount: 2)
         expenses.items.append(expense)
     }
     private func deleteExpense(at offsets : IndexSet){
@@ -50,12 +50,13 @@ struct SecondView : View {
                 Button("dismiss"){
                     dismiss()
                 }.padding()
-                Spacer()
-                Button("Add Expense"){
-                    addExpense()
-                }.padding()
             }
             .navigationTitle("IExpense")
+            .toolbar{
+                Button("Add Expense", systemImage: "plus"){
+                    addExpense()
+                }
+            }
         }
     }
 }
