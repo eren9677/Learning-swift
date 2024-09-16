@@ -18,8 +18,8 @@ struct ExpenseItem : Identifiable { //means “this type can be identified uniqu
     let amount : Double
 }
 
-
-struct Expenses {
+@Observable
+class Expenses {
     var items : [ExpenseItem] = [ExpenseItem]()
 }
 
@@ -59,9 +59,9 @@ struct SecondView : View {
                 Button("Add Expense", systemImage: "plus"){
                     addExpense()
                 }
-                .sheet(isPresented: $showingEditView, content: {
+                .sheet(isPresented: $showingEditView){
                     EditView(expenses: expenses)
-                })
+                }
                 
             }
         }
