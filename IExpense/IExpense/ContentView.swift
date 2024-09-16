@@ -23,7 +23,7 @@ class Expenses {
     var items = [ExpenseItem]() {
         didSet {
             if let encoded = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.setValue(encoded, forKey: "Items")
+                UserDefaults.standard.set(encoded, forKey: "Items")
             }
         }
     }
