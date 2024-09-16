@@ -9,10 +9,10 @@ import SwiftUI
  // this example wil show passing data between views using classes and an observable keyword.
 
 
-struct ExpenseItem : Identifiable { //means “this type can be identified uniquely.” we can just use this in a foreach wihout  specifying id: \.id
+struct ExpenseItem : Identifiable, Codable{ //means “this type can be identified uniquely.” we can just use this in a foreach wihout  specifying id: \.id
     //it willl automatically get itWs
     
-    let id : UUID = UUID() //this function creates a uuid universal unique id to help our swiftui view to help them identify işt.
+    var id : UUID = UUID() //this function creates a uuid universal unique id to help our swiftui view to help them identify işt.
     let name: String
     let type : String
     let amount : Double
@@ -20,8 +20,25 @@ struct ExpenseItem : Identifiable { //means “this type can be identified uniqu
 
 @Observable
 class Expenses {
-    var items : [ExpenseItem] = [ExpenseItem]()
+    var items = [ExpenseItem]() {
+        didSet {
+            if let encoded = try? JSONEncoder().encode(items) {
+                UserDefaults.standard.setValue(encoded, forKey: "Items")
+            }
+        }
+    }
+    init() {
+        if let savedItems = UserDefaults.standard.data(forKey: "Items") {
+            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
+                items = decodedItems
+                return
+            }
+        }
+
+        items = []
+    }
 }
+
 
 
 
