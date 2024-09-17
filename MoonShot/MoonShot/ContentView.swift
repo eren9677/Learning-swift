@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var astronauts = Bundle.main.decode("astronauts.json")
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        Text("There are this many astronauts: ")
+        Text(String(astronauts.count))
     }
 }
 
