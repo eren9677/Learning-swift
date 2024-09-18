@@ -16,7 +16,7 @@ struct Mission : Codable, Identifiable {
         let role: String
     }
     let id : Int
-    let launch : String? //this part is optional because one of the missions has no launch date information!
+    let launchDate : String? //this part is optional because one of the missions has no launch date information!
     let crew: [CrewRole]
     let description: String
     
