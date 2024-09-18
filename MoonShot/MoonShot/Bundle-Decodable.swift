@@ -9,7 +9,7 @@ import Foundation
 //this file will create an extension to the bundle struct this will both load the bundle and the decode it's information.
 // the astronauts.json and missions.json has information and needs to be loaded before decoding. lets handle that in a bundle
 extension Bundle {
-    func decode( _ file: String) -> [String : Astronaut]{
+    func decode<GenericTypeeee: Codable>( _ file: String) -> GenericTypeeee{
         guard let url = Bundle.main.url(forResource: file, withExtension: nil) else {
             fatalError("Failed to locate \(file). ")
         }
@@ -20,7 +20,7 @@ extension Bundle {
         let decoder = JSONDecoder()
         
         do {
-            return try decoder.decode([String: Astronaut].self, from: data)
+            return try decoder.decode(GenericTypeeee.self, from: data)
         } catch DecodingError.keyNotFound(let key, let context) {
             fatalError("Failed to decode \(file) from bundle due to missing key '\(key.stringValue)' – \(context.debugDescription)")
         } catch DecodingError.typeMismatch(_, let context) {

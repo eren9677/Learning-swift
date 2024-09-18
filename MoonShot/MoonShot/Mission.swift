@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct Misson : Codable, Identifiable {
+struct Mission : Codable, Identifiable {
     struct CrewRole: Codable{
         let name: String
         let role: String
@@ -19,4 +19,11 @@ struct Misson : Codable, Identifiable {
     let launch : String? //this part is optional because one of the missions has no launch date information!
     let crew: [CrewRole]
     let description: String
+    
+    var name: String {
+        "Apollo \(id)"
+    }
+    var image: String {
+        "apollo\(id)"
+    }
 }
