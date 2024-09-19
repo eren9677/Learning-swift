@@ -17,6 +17,7 @@
 		B0D5C4982C99AACC00A7AFDF /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D5C4972C99AACC00A7AFDF /* Bundle-Decodable.swift */; };
 		B0D5C49A2C9AB5DF00A7AFDF /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D5C4992C9AB5DF00A7AFDF /* Mission.swift */; };
 		B0F65A0D2C9C407300E2CA8A /* Color-Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F65A0C2C9C406A00E2CA8A /* Color-Theme.swift */; };
+		B0F65A0F2C9C4B6500E2CA8A /* MissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F65A0E2C9C4B6500E2CA8A /* MissionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		B0D5C4972C99AACC00A7AFDF /* Bundle-Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
 		B0D5C4992C9AB5DF00A7AFDF /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
 		B0F65A0C2C9C406A00E2CA8A /* Color-Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color-Theme.swift"; sourceTree = "<group>"; };
+		B0F65A0E2C9C4B6500E2CA8A /* MissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				B0F65A0C2C9C406A00E2CA8A /* Color-Theme.swift */,
 				B0D5C4972C99AACC00A7AFDF /* Bundle-Decodable.swift */,
 				B0D5C4852C9998F900A7AFDF /* ContentView.swift */,
+				B0F65A0E2C9C4B6500E2CA8A /* MissionView.swift */,
 				B0D5C4992C9AB5DF00A7AFDF /* Mission.swift */,
 				B0D5C4952C99A97B00A7AFDF /* Astronaut.swift */,
 				B0D5C4912C99A57400A7AFDF /* astronauts.json */,
@@ -157,6 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0F65A0F2C9C4B6500E2CA8A /* MissionView.swift in Sources */,
 				B0D5C4962C99A97B00A7AFDF /* Astronaut.swift in Sources */,
 				B0F65A0D2C9C407300E2CA8A /* Color-Theme.swift in Sources */,
 				B0D5C4862C9998F900A7AFDF /* ContentView.swift in Sources */,
