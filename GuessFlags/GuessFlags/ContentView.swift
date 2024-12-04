@@ -28,7 +28,7 @@ struct FlagImage2: View {
 
 struct BlueImage : ViewModifier {
     func body(content: Content) -> some View {
-        content.font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).foregroundStyle(.blue)
+        content.font(.title).foregroundStyle(.blue)
     }
 }
 

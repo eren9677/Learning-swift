@@ -30,6 +30,9 @@ struct MissionView: View {
                     Text(mission.description)
                 }
                 .padding(.horizontal)
+                //horizontal Hstack which shows the astronauts in this mission
+                
+                
             }
             .padding(.bottom)
         }
