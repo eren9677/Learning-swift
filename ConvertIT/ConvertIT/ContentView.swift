@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var selectedUnit: String = "Celcius"
     @State private var units: [String] = ["Celcius", "Fahrenheit", "Kelvin"]
     @State private var toBeConverted: String = "Celcius"
-    
+    @FocusState private var focused: Bool
     @State private var conversionMatrix: [String: [String: (Double) -> Double]] = [
         "Celcius": [
             "Fahrenheit": { celsius in (celsius * 9/5) + 32 },
@@ -48,7 +48,8 @@ struct ContentView: View {
                 Section("Enter the temperature"){
                     HStack {
                         TextField("Enter temperature", value: $temperature, format: .number)
-                                .keyboardType(.numberPad)
+                            .keyboardType(.numberPad)
+                            .focused($focused)
                         Picker("",selection: $selectedUnit) {
                             ForEach(units, id: \.self) { unit in
                                 Text(unit)
@@ -72,13 +73,27 @@ struct ContentView: View {
                 }
                 
                 
-                
-
-                
-            }.navigationTitle("Convert Temperatures")
+            }
+            .navigationTitle("Convert Temperatures")
+            .toolbar {
+                if focused {
+                    ToolbarItem(placement: .keyboard) {
+                        HStack {
+                            Spacer()
+                            Button("Done"){
+                                self.focused.toggle()
+                            }
+                        }
+                        
+                    }
+                    
+                }
+            }
         }
     }
-}
+
+                
+    }
 
 #Preview {
     ContentView()
