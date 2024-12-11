@@ -93,7 +93,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
-            AngularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center).ignoresSafeArea()
+            LinearGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], startPoint: .top, endPoint:.bottom).ignoresSafeArea()
             VStack{
                 Spacer()
                 Text("Welcome to GuessFlags 🤠").font(.title.weight(.bold)).foregroundStyle(.black)
@@ -131,6 +131,8 @@ struct ContentView: View {
                 .padding(.vertical)
                 .background(.thinMaterial)
                 .clipShape(.rect(cornerRadius: 20))
+                .padding([.vertical],10)
+                .padding([.horizontal],10)
                 Spacer()
                 Text("Your Score: \(score)").font(.title2.weight(.semibold)).foregroundStyle(.primary)
             }
