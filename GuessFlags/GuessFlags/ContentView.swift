@@ -7,6 +7,32 @@
 
 import SwiftUI
 
+
+// i will create a watermark view modifier on images.
+
+struct WatermarkImages: ViewModifier {
+    var text: String
+    
+    func body(content: Content) -> some View{
+        ZStack(alignment: .bottomTrailing){
+            content
+            Text(text)
+                .font(.custom("Times New Roman", size: 10))
+                .foregroundStyle(.white)
+                .padding(5)
+                .background(.black)
+                .clipShape(.capsule)
+        }
+    }
+    
+}
+
+extension View {
+    func watermarked(text: String) -> some View{
+        modifier(WatermarkImages(text: text))
+    }
+}
+
 struct FlagImage2: View {
     
     var file : String
@@ -19,6 +45,7 @@ struct FlagImage2: View {
             .frame(width: 150, height:100)
             .scaledToFit()
             .shadow(radius: 5)
+            .watermarked(text: "Eren Kızılırmak")
             
     }
 }
