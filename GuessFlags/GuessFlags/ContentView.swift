@@ -8,6 +8,26 @@
 import SwiftUI
 
 
+// i will create a custom gridstack container.
+
+struct GridStack<Content: View>: View {
+    let rows: Int
+    let cols: Int
+    @ViewBuilder let content: (Int,Int) -> Content
+    
+    var body: some View{
+        ForEach(0..<rows, id: \.self){ row in
+            ForEach(0..<cols, id: \.self){ col in
+                content(row,col)
+            }
+        }
+    }
+}
+
+
+
+
+
 // i will create a watermark view modifier on images.
 
 struct WatermarkImages: ViewModifier {
