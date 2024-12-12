@@ -61,6 +61,10 @@ struct ContentView: View {
     private let ends : [String] = ["Win","Lose"]
     @State private var selectedEnd : Int = Int.random(in: 0...1)
     
+    @State private var agreedToTerms = false
+    @State private var agreedToPrivacyPolicy = false
+    @State private var agreedToEmails = false
+
     
     private let checkMatrix : [Int : [Int : Int]] = [
         //0 is for lose and 1 is for win
@@ -121,6 +125,16 @@ struct ContentView: View {
     
     
     var body: some View {
+        let agreedToAll = Binding<Bool>(
+                get: {
+                    agreedToTerms && agreedToPrivacyPolicy && agreedToEmails
+                },
+                set: {
+                    agreedToTerms = $0
+                    agreedToPrivacyPolicy = $0
+                    agreedToEmails = $0
+                }
+            )
         ZStack{
             AngularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red ], center: .center).ignoresSafeArea()
             VStack{
@@ -170,6 +184,15 @@ struct ContentView: View {
                     }
 
                 }.blockIt()
+                
+                HStack{
+                    VStack {
+                                Toggle("Agree to terms", isOn: $agreedToTerms)
+                                Toggle("Agree to privacy policy", isOn: $agreedToPrivacyPolicy)
+                                Toggle("Agree to receive shipping emails", isOn: $agreedToEmails)
+                                Toggle("Agree to all", isOn: agreedToAll)
+                            }
+                        }
                 
             }.padding()
         }
