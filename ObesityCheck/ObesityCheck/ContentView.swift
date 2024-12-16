@@ -51,6 +51,28 @@ struct SinglePickerView: View {
     }
 }
 
+struct WheelPickerView: View {
+    let question: String
+    let start: Int
+    let end: Int
+    @Binding var selection: Int
+    
+    var body: some View {
+        HStack {
+            Question(question: question)
+            Spacer()
+            Text("\(selection)")
+            Picker("Select", selection: $selection) {
+                ForEach(start..<end, id: \.self){
+                    Text("\($0)")
+                }
+            }
+            .pickerStyle(.wheel)
+            .frame(width:100, height:100)
+        }
+    }
+}
+
 
 struct ContentView: View {
    // init() {
@@ -185,28 +207,33 @@ struct ContentView: View {
 //                        }
                         SinglePickerView(question: "What is your gender?", options: genders, selection: $selectedGender)
                         
-                        HStack {
-                            Question(question: "What is your age?")
-                            Spacer()
-                            Text("\(age)")
-                                .padding(.horizontal)
-                            Stepper("age", value: $age, in: 0...100, step:1)
-                                .labelsHidden()
-                                .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question: "What is your age?")
+//                            Spacer()
+//                            Text("\(age)")
+//                                .padding(.horizontal)
+//                            Stepper("age", value: $age, in: 0...100, step:1)
+//                                .labelsHidden()
+//                                .padding(.horizontal)
+//                        }
+//
+                        WheelPickerView(question: "What is your age?", start: 0, end: 100, selection: $age)
+//                        HStack{
+//                            Question(question: "What is your height?")
+//                            Spacer()
+//                            Text("\(height) cm")
+//                                .padding(.horizontal)
+//                            Picker("Select height", selection: $height){
+//                                ForEach(1..<210, id: \.self){
+//                                    Text("\($0)")
+//                                }
+//                                
+//                            }.pickerStyle(.wheel)
+//                                .frame(width:100, height:100)
                         
-                        HStack{
-                            Question(question: "What is your height?")
-                            Spacer()
-                            Text("\(height) cm")
-                                .padding(.horizontal)
-                            Picker("Select height", selection: $height){
-                                ForEach(1..<210, id: \.self){
-                                    Text("\($0)")
-                                }
-                                
-                            }.pickerStyle(.wheel)
-                                .frame(width:100, height:100)
+                        WheelPickerView(question: "What is your height?", start: 0, end: 210, selection: $height)
+                        
+                    
                                 //.clipShape(.capsule)
 //                            TextField("Enter height", value: $height, format: .number)
 //                                .padding([.vertical],10)
@@ -218,7 +245,7 @@ struct ContentView: View {
 //                                .padding(.horizontal)
 //                                .focused($isFocused)
 //                                .keyboardType(.numberPad)
-                        }
+//                        }
                         
 //                        HStack {
 //                            Question(question:"Are your family members obese?")
@@ -355,7 +382,6 @@ struct ContentView: View {
 //                            .padding(.horizontal)
 //                        }
                         SinglePickerView(question:"What type of transportation you use most often? ", options: typeOfTransportation, selection: $selectedTypeOfTransportation)
-                        
                         
                         
                         
