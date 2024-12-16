@@ -30,6 +30,10 @@ struct Question: View {
 }
 
 struct ContentView: View {
+   // init() {
+       // UINavigationBar.appearance().barTintColor = .purple // Uses UIColor
+     // }
+      
     
     @State private var genders: [String] = ["Male", "Female"]
     @State private var selectedGender: String = "Male"
@@ -39,10 +43,26 @@ struct ContentView: View {
     @State private var height: Int = 0
     @FocusState private var isFocused: Bool
     
+    @State private var familyMembersObese: [String] = ["Yes", "No"]
+    @State private var selectedFamilyMembersObese: String = "No"
+    
+    @State private var consumptionOfFastFood: [String] = ["Yes", "No"]
+    @State private var selectedConsumptionOfFastFood: String = "No"
+    
+    @State private var frequencyOfConsumptionOfVegetables: [String] = ["Rarely", "Sometimes", "Once a Week"]
+    @State private var selectedFrequencyOfConsumptionOfVegetables: String = "Rarely"
+    
+    @State private var numberOfMainMealsDaily: [String] = ["1-2","3","3+"]
+    @State private var selectedNumberOfMainMealsDaily: String = "3"
+    
+    @State private var foodIntakeBetweenMeals: [String] = ["Rarely","Sometimes","Usually","Always"]
+    @State private var selectedFoodIntakeBetweenMeals: String = "Rarely"
+    
     var body: some View {
+        
         NavigationStack{
             ZStack{
-                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]), startPoint: .leading, endPoint: .trailing).ignoresSafeArea()
+                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.red]), startPoint: .leading, endPoint: .trailing).ignoresSafeArea(.all)
                 
                 ScrollView{
                     
@@ -86,11 +106,55 @@ struct ContentView: View {
                                 .keyboardType(.numberPad)
                         }
                         
+                        HStack {
+                            Question(question:"Are your family members obese?")
+                            Spacer()
+                            Picker("select",selection: $selectedFamilyMembersObese){
+                                ForEach(familyMembersObese, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"Do you Consume Fast Food?")
+                            Spacer()
+                            Picker("select",selection: $selectedConsumptionOfFastFood){
+                                ForEach(consumptionOfFastFood, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"How often do you consume vegetables?")
+                            Spacer()
+                            Picker("select ",selection: $selectedFrequencyOfConsumptionOfVegetables){
+                                ForEach(frequencyOfConsumptionOfVegetables, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"How many main meals do you have in a day?")
+                            Spacer()
+                            Picker("select",selection: $selectedNumberOfMainMealsDaily){
+                                ForEach(numberOfMainMealsDaily, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
                         
                         
                     }.blockIt()
 
-                }
+                }.toolbarBackground(.ultraThinMaterial) //this changes the background of toolbar.
                 .navigationTitle("Obesity Check")
                 .toolbar {
                     if isFocused {
@@ -98,11 +162,10 @@ struct ContentView: View {
                             Button("Done") {
                                 isFocused = false
                             }
-                            .fixedSize()
-                            .frame(maxWidth: .infinity)
+                            .frame(width: 40)
+                            .padding([.horizontal],10)
                             .clipShape(.rect(cornerRadius: 15))
                             .background(.thinMaterial)
-                            .padding([.horizontal],10)
                         }
                     }
                 }
