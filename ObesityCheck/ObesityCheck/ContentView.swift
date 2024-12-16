@@ -10,10 +10,12 @@ import SwiftUI
 struct BlockIt: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(maxWidth:.infinity)
-            .background(.thinMaterial)
-            .clipShape(.rect(cornerRadius: 15))
             .padding()
+            .background(.thinMaterial)
+            .clipShape(.rect(cornerSize: .init(width: 50, height: 50)))
+            .clipShape(.rect(cornerRadius: 30))
+            .padding()
+            .padding(.bottom,70)
     }
 }
 
