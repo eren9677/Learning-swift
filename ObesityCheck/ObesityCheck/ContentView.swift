@@ -31,6 +31,8 @@ struct Question: View {
     }
 }
 
+
+
 struct ContentView: View {
    // init() {
        // UINavigationBar.appearance().barTintColor = .purple // Uses UIColor
@@ -51,7 +53,7 @@ struct ContentView: View {
     @State private var consumptionOfFastFood: [String] = ["Yes", "No"]
     @State private var selectedConsumptionOfFastFood: String = "No"
     
-    @State private var frequencyOfConsumptionOfVegetables: [String] = ["Rarely", "Sometimes", "Once a Week"]
+    @State private var frequencyOfConsumptionOfVegetables: [String] = ["Rarely", "Sometimes", "Always"]
     @State private var selectedFrequencyOfConsumptionOfVegetables: String = "Rarely"
     
     @State private var numberOfMainMealsDaily: [String] = ["1-2","3","3+"]
@@ -77,6 +79,70 @@ struct ContentView: View {
     
     @State private var typeOfTransportation: [String] = ["Automobile","Motorbike","Bike","Public Transportation","Walking"]
     @State private var selectedTypeOfTransportation: String = "Automobile"
+    
+    
+    private let conversionMatrix: [String : [String: Int]] = [
+        "gender":[
+            "Male": 1,
+            "Female": 2
+        ],
+        "familyMembersObese":[
+            "Yes": 1,
+            "No": 2
+        ],
+        "consumptionOfFastFood":[
+            "Yes": 1,
+            "No": 2
+        ],
+        "frequencyOfConsumptionOfVegetables":[
+            "Rarely":1,
+            "Sometimes":2,
+            "Always":3
+        ],
+        "numberOfMainMealsDaily":[
+            "1-2":1,
+            "3":2,
+            "3+":3
+            ],
+        "foodIntakeBetweenMeals":[
+            "Rarely":1,
+            "Sometimes":2,
+            "Usually":3,
+            "Always":4
+        ],
+        "smoke":[
+            "Yes":1,
+            "No":2
+        ],
+        "dailyLiquidExcretion": [
+            "Less than 1 liter":1,
+            "1-2 liters":2,
+            "More than 2 Liters":3
+        ],
+        "calorieTracking":[
+            "Yes":1,
+            "No":2
+        ],
+        "physicalExercise":[
+            "No physical activity":1,
+            "1-2 days":2,
+            "3-4 days":3,
+            " 5-6 days":4,
+            "6+ days":5
+        ],
+        "scheduleDedicatedToTechnology":[
+            "0-2 hours":1,
+            "3-5 hours":2,
+            "5+ hours":3
+            ],
+        "typeOfTransportation": [
+            "Automobile":1,
+            "Motorbike":2,
+            "Bike":3,
+            "Public Transportation":4,
+            "Walking":5
+        ]
+    ]
     
     var body: some View {
         
