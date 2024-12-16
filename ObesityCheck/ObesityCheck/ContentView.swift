@@ -45,6 +45,7 @@ struct SinglePickerView: View {
                     Text("\(option)")
                 }
             }
+            .padding(.horizontal)
             .pickerStyle(.menu)
         }
     }
@@ -172,16 +173,17 @@ struct ContentView: View {
                     
                     VStack{
                         
-                        HStack {
-                            Question(question:"What is your gender?")
-                            Spacer()
-                            Picker("select gender",selection: $selectedGender){
-                                ForEach(genders, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"What is your gender?")
+//                            Spacer()
+//                            Picker("select gender",selection: $selectedGender){
+//                                ForEach(genders, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+                        SinglePickerView(question: "What is your gender?", options: genders, selection: $selectedGender)
                         
                         HStack {
                             Question(question: "What is your age?")
@@ -218,126 +220,141 @@ struct ContentView: View {
 //                                .keyboardType(.numberPad)
                         }
                         
-                        HStack {
-                            Question(question:"Are your family members obese?")
-                            Spacer()
-                            Picker("select",selection: $selectedFamilyMembersObese){
-                                ForEach(familyMembersObese, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"Are your family members obese?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedFamilyMembersObese){
+//                                ForEach(familyMembersObese, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//
+                        SinglePickerView(question:"Are your family members obese?", options: familyMembersObese, selection: $selectedFamilyMembersObese)
+//                        HStack {
+//                            Question(question:"Do you Consume Fast Food?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedConsumptionOfFastFood){
+//                                ForEach(consumptionOfFastFood, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+                        SinglePickerView(question:"Do you Consume Fast Food?", options: consumptionOfFastFood, selection: $selectedConsumptionOfFastFood)
                         
-                        HStack {
-                            Question(question:"Do you Consume Fast Food?")
-                            Spacer()
-                            Picker("select",selection: $selectedConsumptionOfFastFood){
-                                ForEach(consumptionOfFastFood, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"How often do you consume vegetables?")
+//                            Spacer()
+//                            Picker("select ",selection: $selectedFrequencyOfConsumptionOfVegetables){
+//                                ForEach(frequencyOfConsumptionOfVegetables, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//
+                        SinglePickerView(question:"How often do you consume vegetables?", options: frequencyOfConsumptionOfVegetables, selection: $selectedFrequencyOfConsumptionOfVegetables)
                         
-                        HStack {
-                            Question(question:"How often do you consume vegetables?")
-                            Spacer()
-                            Picker("select ",selection: $selectedFrequencyOfConsumptionOfVegetables){
-                                ForEach(frequencyOfConsumptionOfVegetables, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"How many main meals do you have in a day?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedNumberOfMainMealsDaily){
+//                                ForEach(numberOfMainMealsDaily, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+                        SinglePickerView(question:"How many main meals do you have in a day?", options: numberOfMainMealsDaily, selection: $selectedNumberOfMainMealsDaily)
                         
-                        HStack {
-                            Question(question:"How many main meals do you have in a day?")
-                            Spacer()
-                            Picker("select",selection: $selectedNumberOfMainMealsDaily){
-                                ForEach(numberOfMainMealsDaily, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
                         
-                        HStack {
-                            Question(question:"How often do you eat between meals?")
-                            Spacer()
-                            Picker("select",selection: $selectedFoodIntakeBetweenMeals){
-                                ForEach(foodIntakeBetweenMeals, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"How often do you eat between meals?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedFoodIntakeBetweenMeals){
+//                                ForEach(foodIntakeBetweenMeals, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+                        SinglePickerView(question:"How often do you eat between meals?", options: foodIntakeBetweenMeals, selection: $selectedFoodIntakeBetweenMeals)
                         
-                        HStack {
-                            Question(question:"Do you smoke?")
-                            Spacer()
-                            Picker("select",selection: $selectedSmoke){
-                                ForEach(smoke, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"Do you smoke?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedSmoke){
+//                                ForEach(smoke, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//
+                        SinglePickerView(question:"Do you smoke?", options: smoke, selection: $selectedSmoke)
+//                        HStack {
+//                            Question(question:"How much do you drink water per day?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedDailyLiquidExcretion){
+//                                ForEach(dailyLiquidExcretion, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+                        SinglePickerView(question:"How much do you drink water per day?", options: dailyLiquidExcretion, selection: $selectedDailyLiquidExcretion)
                         
-                        HStack {
-                            Question(question:"How much do you drink water per day?")
-                            Spacer()
-                            Picker("select",selection: $selectedDailyLiquidExcretion){
-                                ForEach(dailyLiquidExcretion, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"Do you track your calories?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedCalorieTracking){
+//                                ForEach(calorieTracking, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//
+                        SinglePickerView(question:"Do you track your calories?", options: calorieTracking, selection: $selectedCalorieTracking)
                         
-                        HStack {
-                            Question(question:"Do you track your calories?")
-                            Spacer()
-                            Picker("select",selection: $selectedCalorieTracking){
-                                ForEach(calorieTracking, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"How much physical activity do you do?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedPhysicalExercise){
+//                                ForEach(physicalExercise, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//
+                        SinglePickerView(question:"How much physical activity do you do?", options: physicalExercise, selection: $selectedPhysicalExercise)
+//                        HStack {
+//                            Question(question:"How much do use use your phone in a day?")
+//                            Spacer()
+//                            Picker("select",selection: $selectedScheduleDedicatedToTechnology){
+//                                ForEach(scheduleDedicatedToTechnology, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+//
+                        SinglePickerView(question:"How much do use use your phone in a day?", options: scheduleDedicatedToTechnology, selection: $selectedScheduleDedicatedToTechnology)
                         
-                        HStack {
-                            Question(question:"How much physical activity do you do?")
-                            Spacer()
-                            Picker("select",selection: $selectedPhysicalExercise){
-                                ForEach(physicalExercise, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
-                        
-                        HStack {
-                            Question(question:"How much do use use your phone in a day?")
-                            Spacer()
-                            Picker("select",selection: $selectedScheduleDedicatedToTechnology){
-                                ForEach(scheduleDedicatedToTechnology, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
-                        
-                        HStack {
-                            Question(question:"What type of transportation you use most often? ")
-                            Spacer()
-                            Picker("select",selection: $selectedTypeOfTransportation){
-                                ForEach(typeOfTransportation, id: \.self){
-                                    Text($0)
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+//                        HStack {
+//                            Question(question:"What type of transportation you use most often? ")
+//                            Spacer()
+//                            Picker("select",selection: $selectedTypeOfTransportation){
+//                                ForEach(typeOfTransportation, id: \.self){
+//                                    Text($0)
+//                                }
+//                            }
+//                            .padding(.horizontal)
+//                        }
+                        SinglePickerView(question:"What type of transportation you use most often? ", options: typeOfTransportation, selection: $selectedTypeOfTransportation)
                         
                         
                         
