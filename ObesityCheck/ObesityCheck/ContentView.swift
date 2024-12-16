@@ -31,6 +31,24 @@ struct Question: View {
     }
 }
 
+struct SinglePickerView: View {
+    let question: String
+    let options: [String]
+    @Binding var selection: String
+    
+    var body: some View {
+        HStack {
+            Question(question: question)
+            Spacer()
+            Picker("Select", selection: $selection) {
+                ForEach(options, id: \.self) { option in
+                    Text("\(option)")
+                }
+            }
+            .pickerStyle(.menu)
+        }
+    }
+}
 
 
 struct ContentView: View {
@@ -180,16 +198,24 @@ struct ContentView: View {
                             Spacer()
                             Text("\(height) cm")
                                 .padding(.horizontal)
-                            TextField("Enter height", value: $height, format: .number)
-                                .padding([.vertical],10)
-                                .fixedSize()
-                                .labelsHidden()
-                                .multilineTextAlignment(.center)
-                                .background(.ultraThinMaterial)
-                                .clipShape(.rect(cornerRadius: 15))
-                                .padding(.horizontal)
-                                .focused($isFocused)
-                                .keyboardType(.numberPad)
+                            Picker("Select height", selection: $height){
+                                ForEach(1..<210, id: \.self){
+                                    Text("\($0)")
+                                }
+                                
+                            }.pickerStyle(.wheel)
+                                .frame(width:100, height:100)
+                                //.clipShape(.capsule)
+//                            TextField("Enter height", value: $height, format: .number)
+//                                .padding([.vertical],10)
+//                                .fixedSize()
+//                                .labelsHidden()
+//                                .multilineTextAlignment(.center)
+//                                .background(.ultraThinMaterial)
+//                                .clipShape(.rect(cornerRadius: 15))
+//                                .padding(.horizontal)
+//                                .focused($isFocused)
+//                                .keyboardType(.numberPad)
                         }
                         
                         HStack {
