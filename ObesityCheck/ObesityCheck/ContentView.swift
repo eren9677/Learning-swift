@@ -32,15 +32,15 @@ struct Question: View {
 struct ContentView: View {
    // init() {
        // UINavigationBar.appearance().barTintColor = .purple // Uses UIColor
+    
      // }
-      
     
     @State private var genders: [String] = ["Male", "Female"]
     @State private var selectedGender: String = "Male"
     
-    @State private var age: Int = 0
+    @State private var age: Int = 18
     
-    @State private var height: Int = 0
+    @State private var height: Int = 170
     @FocusState private var isFocused: Bool
     
     @State private var familyMembersObese: [String] = ["Yes", "No"]
@@ -57,6 +57,24 @@ struct ContentView: View {
     
     @State private var foodIntakeBetweenMeals: [String] = ["Rarely","Sometimes","Usually","Always"]
     @State private var selectedFoodIntakeBetweenMeals: String = "Rarely"
+    
+    @State private var smoke: [String] = ["Yes", "No"]
+    @State private var selectedSmoke: String = "No"
+    
+    @State private var dailyLiquidExcretion: [String] = ["Less than 1 liter","1-2 liters","More than 2 Liters"]
+    @State private var selectedDailyLiquidExcretion: String = "Less than 1 liter"
+    
+    @State private var calorieTracking: [String] = ["Yes", "No"]
+    @State private var selectedCalorieTracking: String = "No"
+    
+    @State private var physicalExercise: [String] = ["No physical activity", "1-2 days","3-4 days"," 5-6 days","6+ days"]
+    @State private var selectedPhysicalExercise: String = "1-2 days"
+    
+    @State private var scheduleDedicatedToTechnology: [String] = ["0-2 hours","3-5 hours","5+ hours"]
+    @State private var selectedScheduleDedicatedToTechnology: String = "0-2 hours"
+    
+    @State private var typeOfTransportation: [String] = ["Automobile","Motorbike","Bike","Public Transportation","Walking"]
+    @State private var selectedTypeOfTransportation: String = "Automobile"
     
     var body: some View {
         
@@ -150,6 +168,86 @@ struct ContentView: View {
                             .padding(.horizontal)
                         }
                         
+                        HStack {
+                            Question(question:"How often do you eat between meals?")
+                            Spacer()
+                            Picker("select",selection: $selectedFoodIntakeBetweenMeals){
+                                ForEach(foodIntakeBetweenMeals, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"Do you smoke?")
+                            Spacer()
+                            Picker("select",selection: $selectedSmoke){
+                                ForEach(smoke, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"How much do you drink water per day?")
+                            Spacer()
+                            Picker("select",selection: $selectedDailyLiquidExcretion){
+                                ForEach(dailyLiquidExcretion, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"Do you track your calories?")
+                            Spacer()
+                            Picker("select",selection: $selectedCalorieTracking){
+                                ForEach(calorieTracking, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"How much physical activity do you do?")
+                            Spacer()
+                            Picker("select",selection: $selectedPhysicalExercise){
+                                ForEach(physicalExercise, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"How much do use use your phone in a day?")
+                            Spacer()
+                            Picker("select",selection: $selectedScheduleDedicatedToTechnology){
+                                ForEach(scheduleDedicatedToTechnology, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        HStack {
+                            Question(question:"What type of transportation you use most often? ")
+                            Spacer()
+                            Picker("select",selection: $selectedTypeOfTransportation){
+                                ForEach(typeOfTransportation, id: \.self){
+                                    Text($0)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        
+                        
+                        
+                        
                         
                         
                     }.blockIt()
@@ -164,8 +262,9 @@ struct ContentView: View {
                             }
                             .frame(width: 40)
                             .padding([.horizontal],10)
-                            .clipShape(.rect(cornerRadius: 15))
+                            .safeAreaPadding(.init(top: 2, leading: 5, bottom: 2, trailing: 10))
                             .background(.thinMaterial)
+                            .clipShape(.rect(cornerRadius: 15))
                         }
                     }
                 }
