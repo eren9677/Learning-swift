@@ -16,7 +16,7 @@ struct BlockIt: ViewModifier {
             .clipShape(.rect(cornerSize: .init(width: 50, height: 50)))
             .clipShape(.rect(cornerRadius: 30))
             .padding()
-            .padding(.bottom,70)
+            .padding(.bottom,20)
     }
 }
 
