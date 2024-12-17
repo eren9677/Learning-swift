@@ -86,7 +86,7 @@ struct ContentView: View {
     @State private var age: Int = 18
     
     @State private var height: Int = 170
-    @FocusState private var isFocused: Bool
+    //@FocusState private var isFocused: Bool
     
     @State private var familyMembersObese: [String] = ["Yes", "No"]
     @State private var selectedFamilyMembersObese: String = "No"
@@ -121,6 +121,10 @@ struct ContentView: View {
     @State private var typeOfTransportation: [String] = ["Automobile","Motorbike","Bike","Public Transportation","Walking"]
     @State private var selectedTypeOfTransportation: String = "Automobile"
     
+    //in this line i will put in an array all the selectedvalues such as selectedGender
+    private var allselectedValues: [String] {
+        [selectedCalorieTracking, selectedConsumptionOfFastFood, selectedDailyLiquidExcretion, selectedFamilyMembersObese, selectedFoodIntakeBetweenMeals, selectedFrequencyOfConsumptionOfVegetables, selectedGender, selectedNumberOfMainMealsDaily, selectedPhysicalExercise, selectedScheduleDedicatedToTechnology, selectedSmoke, selectedTypeOfTransportation]
+    }
     
     private let conversionMatrix: [String : [String: Int]] = [
         "gender":[
@@ -184,6 +188,25 @@ struct ContentView: View {
             "Walking":5
         ]
     ]
+    private var parameterNames : [String] {
+        Array(conversionMatrix.keys).sorted()
+    }
+    private func normalizeData(parameters: [String], values:[String]) -> Double{
+        var normalized: [Double] = []
+        
+        for (parameterName, value) in zip(parameters,values) {
+            guard let conversionName = conversionMatrix[parameterName],
+            let numerical = conversionName[value] else{
+                return 0.0
+            }
+            normalized.append(Double(numerical))
+            
+            
+        }
+        
+        
+        return normalized[2]
+    }
     
     var body: some View {
         
@@ -233,8 +256,6 @@ struct ContentView: View {
                         
                         WheelPickerView(question: "What is your height?", start: 0, end: 210, selection: $height)
                         
-                    
-                                //.clipShape(.capsule)
 //                            TextField("Enter height", value: $height, format: .number)
 //                                .padding([.vertical],10)
 //                                .fixedSize()
@@ -382,8 +403,12 @@ struct ContentView: View {
 //                            .padding(.horizontal)
 //                        }
                         SinglePickerView(question:"What type of transportation you use most often? ", options: typeOfTransportation, selection: $selectedTypeOfTransportation)
-                        
-                        
+                        //calculation button
+                        HStack {
+                            Button("Calculate") {
+                                
+                            }
+                        }
                         
                         
                         
@@ -391,22 +416,27 @@ struct ContentView: View {
 
                 }.toolbarBackground(.ultraThinMaterial) //this changes the background of toolbar.
                 .navigationTitle("Obesity Check")
-                .toolbar {
-                    if isFocused {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("Done") {
-                                isFocused = false
-                            }
-                            .frame(width: 40)
-                            .padding([.horizontal],10)
-                            .safeAreaPadding(.init(top: 2, leading: 5, bottom: 2, trailing: 10))
-                            .background(.thinMaterial)
-                            .clipShape(.rect(cornerRadius: 15))
-                        }
-                    }
-                }
+//                .toolbar {
+//                    if isFocused {
+//                        ToolbarItem(placement: .navigationBarTrailing) {
+//                            Button("Done") {
+//                                isFocused = false
+//                            }
+//                            .frame(width: 40)
+//                            .padding([.horizontal],10)
+//                            .safeAreaPadding(.init(top: 2, leading: 5, bottom: 2, trailing: 10))
+//                            .background(.thinMaterial)
+//                            .clipShape(.rect(cornerRadius: 15))
+//                        }
+//                    }
+//                }
             }
             
+            
+        }.onChange(of: selectedDailyLiquidExcretion){
+            print(allselectedValues)
+            print(parameterNames)
+            print(normalizeData(parameters: parameterNames, values: allselectedValues))
         }
     }
 }
