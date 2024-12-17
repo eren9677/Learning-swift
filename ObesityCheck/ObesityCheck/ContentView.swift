@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreML
 
 struct BlockIt: ViewModifier {
     func body(content: Content) -> some View {
@@ -191,22 +192,106 @@ struct ContentView: View {
     private var parameterNames : [String] {
         Array(conversionMatrix.keys).sorted()
     }
-    private func normalizeData(parameters: [String], values:[String]) -> Double{
-        var normalized: [Double] = []
+    
+    @State private var alertTitle = ""
+    
+//    private func calculateObesity(parameters: [String], values:[String]) -> Int64{
+//        var normalized: [Int64] = []
+//        var pred: Int64 = 0
+//        
+//        for (parameterName, value) in zip(parameters,values) {
+//            guard let conversionName = conversionMatrix[parameterName],
+//            let numerical = conversionName[value] else{
+//                return 0
+//            }
+//            normalized.append(Int64(numerical))
+//            
+//            do{
+//                let config = MLModelConfiguration()
+//                let model = try ObesityModel_1(configuration: config)
+//                
+//                let prediction = try model.prediction(Age: Int64(age), Calculation_of_Calorie_Intake: normalized[0], Consumption_of_Fast_Food: normalized[1], Food_Intake_Between_Meals: normalized[4], Frequency_of_Consuming_Vegetables: normalized[5], Height: Int64(height), Liquid_Intake_Daily: normalized[2], Number_of_Main_Meals_Daily: normalized[7], Overweight_Obese_Family: normalized[3], Physical_Excercise: normalized[8], Schedule_Dedicated_to_Technology: normalized[9], Sex: normalized[6], Smoking: normalized[10], Type_of_Transportation_Used: normalized[11])
+//                
+//                switch prediction.Class_{
+//                case 1:
+//                    alertTitle = "Underweight"
+//                
+//                case 2:
+//                    alertTitle = "Normal"
+//                
+//                case 3:
+//                    alertTitle = "Overweight"
+//                
+//                case 4:
+//                    alertTitle = "Obesity"
+//                default:
+//                    alertTitle = "Weird Prediction"
+//                }
+//                pred = prediction.Class_
+//                
+//            }
+//            catch{
+//                alertTitle = "Error"
+//            }
+//            
+//        }
+//        return pred
+//    }
+//   
+    private func calculateObesity(parameters: [String], values: [String]) -> Int64 {
+        var normalized: [Int64] = []
         
+        guard parameters.count == values.count else {
+            alertTitle = "Error: Parameters and values do not match."
+            return 0
+        }
         for (parameterName, value) in zip(parameters,values) {
             guard let conversionName = conversionMatrix[parameterName],
-            let numerical = conversionName[value] else{
-                return 0.0
+                  let numerical = conversionName[value] else{
+                return 0
             }
-            normalized.append(Double(numerical))
-            
-            
+            normalized.append(Int64(numerical))
+        }
+
+        
+        // Validate that normalized contains the expected 12 elements
+        guard normalized.count == 12 else {
+            alertTitle = "Error: Missing or invalid parameters."
+            print(alertTitle)
+            return 0
         }
         
         
-        return normalized[2]
+        do {
+            let config = MLModelConfiguration()
+            let model = try ObesityModel_1(configuration: config)
+            
+            let prediction = try model.prediction(Age: Int64(age), Calculation_of_Calorie_Intake: normalized[0], Consumption_of_Fast_Food: normalized[1], Food_Intake_Between_Meals: normalized[4], Frequency_of_Consuming_Vegetables: normalized[5], Height: Int64(height), Liquid_Intake_Daily: normalized[2], Number_of_Main_Meals_Daily: normalized[7], Overweight_Obese_Family: normalized[3], Physical_Excercise: normalized[8], Schedule_Dedicated_to_Technology: normalized[9], Sex: normalized[6], Smoking: normalized[10], Type_of_Transportation_Used: normalized[11])
+            
+            switch prediction.Class_ {
+            case 1:
+                alertTitle = "Underweight"
+            case 2:
+                alertTitle = "Normal"
+            case 3:
+                alertTitle = "Overweight"
+            case 4:
+                alertTitle = "Obesity"
+            default:
+                alertTitle = "Weird Prediction"
+            }
+            print(alertTitle)
+            return prediction.Class_
+        } catch {
+            alertTitle = "Model error: \(error.localizedDescription)"
+            print(alertTitle)
+            return 0
+        }
     }
+    
+    
+    @State private var result: Int64 = 0
+    @State private var showResult: Bool = false
     
     var body: some View {
         
@@ -404,17 +489,39 @@ struct ContentView: View {
 //                        }
                         SinglePickerView(question:"What type of transportation you use most often? ", options: typeOfTransportation, selection: $selectedTypeOfTransportation)
                         //calculation button
-                        HStack {
-                            Button("Calculate") {
-                                
-                            }
-                        }
                         
+                        Button(action: {
+                                                   print("\nAll selected values at calculation:")
+                                                   print(allselectedValues)
+                                                   print("\nParameter names:")
+                                                   print(parameterNames)
+                                                   result = calculateObesity(parameters: parameterNames, values: allselectedValues)
+                                                   showResult = true
+                                               }) {
+                                                   Text("Calculate")
+                                                       .font(.headline)
+                                                       .foregroundColor(.white)
+                                                       .padding()
+                                                       .frame(maxWidth: .infinity)
+                                                       .background(Color.blue)
+                                                       .cornerRadius(10)
+                                               }
+                                               .padding()
+                                               
+                                               if showResult {
+                                                   Text(alertTitle)
+                                                       .font(.title2)
+                                                       .padding()
+                                                       .foregroundColor(.white)
+                                                       .background(Color.black.opacity(0.7))
+                                                       .cornerRadius(10)
+                                                       .padding()
+                                               }
                         
                         
                     }.blockIt()
 
-                }.toolbarBackground(.ultraThinMaterial) //this changes the background of toolbar.
+                }.toolbarBackground(.ultraThinMaterial) 
                 .navigationTitle("Obesity Check")
 //                .toolbar {
 //                    if isFocused {
@@ -433,10 +540,6 @@ struct ContentView: View {
             }
             
             
-        }.onChange(of: selectedDailyLiquidExcretion){
-            print(allselectedValues)
-            print(parameterNames)
-            print(normalizeData(parameters: parameterNames, values: allselectedValues))
         }
     }
 }
