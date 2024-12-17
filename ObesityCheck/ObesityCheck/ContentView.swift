@@ -293,6 +293,21 @@ struct ContentView: View {
     @State private var result: Int64 = 0
     @State private var showResult: Bool = false
     
+    
+    let questions : [String] = [
+        "What is your gender?",
+        "Are your Family members obese?",
+        "Do you Consume Fast Food?",
+        "How often do you consume vegetables?",
+        "How many main meals do you have in a day?",
+        "How often do you eat between meals?",
+        "Do you smoke?",
+        "How much do you drink water per day?",
+        
+        
+        
+    ]
+    
     var body: some View {
         
         NavigationStack{
@@ -302,6 +317,7 @@ struct ContentView: View {
                 ScrollView{
                     
                     VStack{
+                        
                         
 //                        HStack {
 //                            Question(question:"What is your gender?")
@@ -340,7 +356,6 @@ struct ContentView: View {
 //                                .frame(width:100, height:100)
                         
                         WheelPickerView(question: "What is your height?", start: 0, end: 210, selection: $height)
-                        
 //                            TextField("Enter height", value: $height, format: .number)
 //                                .padding([.vertical],10)
 //                                .fixedSize()
@@ -509,19 +524,30 @@ struct ContentView: View {
                                                .padding()
                                                
                                                if showResult {
-                                                   Text(alertTitle)
-                                                       .font(.title2)
-                                                       .padding()
-                                                       .foregroundColor(.white)
-                                                       .background(Color.black.opacity(0.7))
-                                                       .cornerRadius(10)
-                                                       .padding()
+                                                   if alertTitle == "Normal"{
+                                                       Text(alertTitle)
+                                                           .font(.title2)
+                                                           .padding()
+                                                           .foregroundColor(.white)
+                                                           .background(Color.green.opacity(0.7))
+                                                           .cornerRadius(10)
+                                                           .padding()
+                                                   }
+                                                   else {
+                                                       Text(alertTitle)
+                                                           .font(.title2)
+                                                           .padding()
+                                                           .foregroundColor(.white)
+                                                           .background(Color.red.opacity(0.7))
+                                                           .cornerRadius(10)
+                                                           .padding()
+                                                   }
                                                }
                         
                         
                     }.blockIt()
 
-                }.toolbarBackground(.ultraThinMaterial) 
+                }.toolbarBackground(.ultraThinMaterial)
                 .navigationTitle("Obesity Check")
 //                .toolbar {
 //                    if isFocused {
